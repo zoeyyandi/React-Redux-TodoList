@@ -3,9 +3,9 @@ import Titlebar from '../components/Titlebar.js';
 import Todolist from '../components/Todolist.js';
 import Input from '../components/Input.js';
 import Hole from '../components/Hole.js';
-import localforage from 'localforage';
+// import localforage from 'localforage';
 
-const uuidv4 = require('uuid/v4');
+// const uuidv4 = require('uuid/v4');
 
 class App extends Component {
   //   componentWillMount() {

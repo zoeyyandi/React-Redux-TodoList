@@ -1,4 +1,5 @@
 import * as types from '../constants/actionTypes';
+import localforage from 'localforage';
 const uuidv4 = require('uuid/v4');
 
 const defaultState = [
@@ -25,7 +26,7 @@ const defaultState = [
 const todos = (state = defaultState, action) => {
   switch (action.type) {
     case types.ADD_TODO:
-      return [
+      let newTodoList1 = [
         {
           id: action.id,
           todo: action.text,
@@ -34,16 +35,39 @@ const todos = (state = defaultState, action) => {
         },
         ...state
       ];
+      localforage
+        .setItem('todoList', newTodoList1)
+        .then(() => console.log('saved'))
+        .catch(err => {
+          console.log(err);
+        });
+      return newTodoList1;
+
     case types.DELETE_TODO:
-      return state.filter(todo => todo.id !== action.id);
+      let newTodoList2 = state.filter(todo => todo.id !== action.id);
+      localforage
+        .setItem('todoList', newTodoList2)
+        .then(() => console.log('saved'))
+        .catch(err => {
+          console.log(err);
+        });
+      return newTodoList2;
 
     case types.UPDATE_TODO:
-      return state.map(
+      let newTodoList3 = state.map(
         todo =>
           todo.id === action.id
             ? { ...todo, todo: action.text, isEditing: !todo.isEditing }
             : todo
       );
+      localforage
+        .setItem('todoList', newTodoList3)
+        .then(() => console.log('saved'))
+        .catch(err => {
+          console.log(err);
+        });
+      return newTodoList3;
+
     case types.TOGGLE_COMPLETE:
       return state.map(
         todo =>
