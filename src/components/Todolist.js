@@ -2,9 +2,19 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Eachtodo from './Eachtodo.js';
 import { bindActionCreators } from 'redux';
-import { showActive, showCompleted, showAll } from '../actions/index';
+import { showActive, showCompleted, showAll, getInitialTodoList } from '../actions/index';
+import localforage from 'localforage';
 
 class Todolist extends Component {
+  componentWillMount() {
+    localforage
+      .getItem('todoList')
+      .then(value => {
+        this.props.actions.getInitialTodoList(value);
+      })
+      .catch(e => console.log(e));
+  }
+
   handleAll = event => {
     this.props.actions.showAll();
   };
@@ -35,19 +45,10 @@ class Todolist extends Component {
         {tabs.isActive &&
           todos
             .filter(todo => !todo.isComplete)
-            .map((todo, index) => (
-              <Eachtodo todo={todo} id={todo.id} key={index} />
-            ))}
-        {tabs.isAll &&
-          todos.map((todo, index) => (
-            <Eachtodo todo={todo} id={todo.id} key={index} />
-          ))}
+            .map((todo, index) => <Eachtodo todo={todo} id={todo.id} key={index} />)}
+        {tabs.isAll && todos.map((todo, index) => <Eachtodo todo={todo} id={todo.id} key={index} />)}
         {tabs.isComplete &&
-          todos
-            .filter(todo => todo.isComplete)
-            .map((todo, index) => (
-              <Eachtodo todo={todo} id={todo.id} key={index} />
-            ))}
+          todos.filter(todo => todo.isComplete).map((todo, index) => <Eachtodo todo={todo} id={todo.id} key={index} />)}
       </div>
     );
   }
@@ -59,7 +60,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  actions: bindActionCreators({ showActive, showAll, showCompleted }, dispatch)
+  actions: bindActionCreators({ showActive, showAll, showCompleted, getInitialTodoList }, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Todolist);

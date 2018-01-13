@@ -55,3 +55,10 @@ export const showActive = () => {
     type: types.SHOW_ACTIVE
   };
 };
+
+export const getInitialTodoList = value => {
+  return {
+    type: types.INITIAL_TODOLIST,
+    value
+  };
+};

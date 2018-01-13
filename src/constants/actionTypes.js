@@ -6,3 +6,4 @@ export const TOGGLE_EDITING = 'TOGGLE_EDITING';
 export const SHOW_ALL = 'SHOW_ALL';
 export const SHOW_COMPLETED = 'SHOW_COMPLETED';
 export const SHOW_ACTIVE = 'SHOW_ACTIVE';
+export const INITIAL_TODOLIST = 'INITIAL_TODOLIST';

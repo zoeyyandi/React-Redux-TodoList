@@ -25,6 +25,9 @@ const defaultState = [
 
 const todos = (state = defaultState, action) => {
   switch (action.type) {
+    case types.INITIAL_TODOLIST:
+      return action.value ? action.value : defaultState;
+
     case types.ADD_TODO:
       let newTodoList1 = [
         {
